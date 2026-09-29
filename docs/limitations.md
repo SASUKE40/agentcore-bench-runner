@@ -1,0 +1,82 @@
+# 限制与配额
+
+标注：**实测** = 在 us-east-1 / us-east-2 实际观测；**文档** = AWS 官方文档。
+
+## 镜像
+
+| 项 | 值 | 说明 |
+|---|---|---|
+| 镜像大小上限（压缩后） | 账户配额。本账号实测：microVM 约 3 GB（2.88 GB 可运行，3.09 GB 不可）；Instances 2 GB（默认，可申请调到 3 GB） | 换模式不能绕开 |
+| 超限时的表现 | microVM：Harness 创建成功，**会话无输出、无错误、无日志**；Instances：`CreateAgentRuntime` 报 `ServiceQuotaExceededException: maxImageSizeMb` | 实测。`bench.py` 提交前按 `max_image_mb` 检查 |
+| 镜像解压后大小 | microVM：必须放得进约 8.8 GiB 的根文件系统，否则同样静默失败；Instances：占用根卷可写空间 | 实测：rootfs 约 8,972 MiB；解压后 4.4 GB 时剩 972 MiB，5.47 GB 时剩 0，放不下 agent。建议 microVM 镜像解压后不超过 4 GB。另有一个 4.14 GB 的真实镜像静默失败，原因未查明（见 [batch-tests.md](batch-tests.md#24-microvm-解压后大小的补充测试)） |
+| microVM 架构 | **仅 arm64** | 实测：amd64 镜像报 `Architecture incompatible ... Supported platforms: [arm64]` |
+| Instances 架构 | `LINUX_X86_64` / `LINUX_ARM64` | 文档：capacity provider `operatingSystem` |
+
+- 超过上限的镜像走**拆分构建**：大目录移到 S3（`scripts/build_split.sh`，已实测）或 EBS 快照（设计），运行时放回原路径，用 Instances 模式运行。见 [large-images.md](large-images.md)。
+
+## 计算与存储
+
+| 项 | microVM | Instances |
+|---|---|---|
+| vCPU / 内存 | 固定 2 vCPU / 8 GB（文档，不可调） | 取决于所选实例族 |
+| 可写空间 | rootfs 共约 8.8 GiB，基础镜像下约 4.7 GiB 可用，镜像每多 1 GiB 可写空间少 1 GiB（实测） | `rootVolume.freeSpaceGiB` 2-65,000 GiB，另有最多 5 个 EBS 卷（文档）；本次测试的 capacity provider 根卷可用约 20 GiB，镜像内容也占用这部分空间（实测）。配置方法见 [modes.md](modes.md#可写空间大的任务) |
+| 会话最长寿命 | `maxLifetime` 最长 8 h（文档） | 同左 |
+
+| `/dev/shm` | 64 MiB（实测） | 64 MiB（实测） |
+| 磁盘写满时的错误 | `Input/output error`，随后根文件系统变为**只读**（EROFS）（实测） | `No space left on device`（实测） |
+
+- 磁盘写满只影响当前会话，同一沙箱的下一个会话是干净的（实测）。`trial.sh` 预留 64 MiB，任务写满磁盘时仍能写出 `summary.json` 并停止会话；写满期间产生的日志可能为空。
+- 需要大 `/dev/shm` 的任务（如 PyTorch DataLoader 多进程）可能失败。没有找到调大它的配置项。
+
+任务声明的资源（`task.toml` 的 `cpus` / `memory_mb` / `storage_mb`）超出 microVM 规格时，用 Instances 模式。Agent 超时（`[agent].timeout_sec`）加判分时间超过 8 小时的任务无法在一个会话内完成。
+
+## 批量运行中确认的限制（实测，Terminal-Bench 2.0 全量）
+
+详见 [batch-tests.md](batch-tests.md)。
+
+| 项 | 说明 |
+|---|---|
+| 端口 8080 | 两种模式都已被占用：microVM 由运行时自带的服务占用，Instances 由健康检查端点（`adapter/entry.sh`）占用。需要监听 8080 的任务无法原样运行 |
+| capacity provider 的 `idleInstanceTimeout` | 按"实例上没有调用"计时，trial 期间客户端不发调用。该值小于 trial 时长时，实例会被回收，trial 丢失。`bench.py` 在该值小于 trial 超时时拒绝提交 |
+| 控制面限流 | 多个 trial 同时提交时，`ListAgentRuntimes` 等 list API 会被限流。`bench.py` 使用 adaptive 重试 |
+| Instances 下需要 capability 的操作 | `chroot`，以及判分时 dpkg 装包过程中的 `chgrp` 会失败。`build_all.sh` 从 `tests/test.sh` 提取包名并在构建时预装，但并非所有写法都能提取到 |
+| trial 丢失 | 两轮全量运行中出现 3 次（共约 350 个 trial），日志中没有找到原因。由心跳判定为 lost 并记录，重跑即可 |
+| 结果波动 | 同一任务两次运行的 reward 可能不同，比较时应多跑几次 |
+
+## 会话与空闲超时
+
+- **空闲计时从最后一次调用算起，不看沙箱里是否有进程在运行**（实测）。`idleRuntimeSessionTimeout=60` 时，后台进程在客户端停止调用后被回收，4 分钟后的 S3 标记没有写出；设为 900 时同一进程正常完成。
+- 因此 `bench.py` 把空闲超时和最长寿命都设为 8 小时，trial 期间客户端无需任何调用。正常结束时 `trial.sh` 主动停止会话，不会等到超时。若 `trial.sh` 异常退出，会话最迟在 8 小时后回收。
+- 会话状态无法通过 API 查询（没有 GetRuntimeSession）。trial 进度以 S3 上的 `status.json` / `summary.json` 为准。
+- 不要复用 `runtimeSessionId`：停止后再用同一 id 调用会得到一个全新的空沙箱，不报错（实测）。`bench.py` 每个 trial 都用新 id。
+
+## 判分
+
+- 判分在 **agent 所在的同一个沙箱**中进行，对应 Harbor 的默认模式（`environment_mode = "shared"`）。测试在 agent 退出后才从 S3 取回。
+- Harbor 的独立判分模式（`environment_mode = "separate"` 或 `[verifier.environment]`：在另一个断网沙箱中判分，只复制 `artifacts` 声明的产出物）**尚未支持**。Terminal-Bench-Science 的任务全部使用独立判分模式，在本工具上运行时判分环境与官方不同，结果不应作为官方排行榜提交。
+- docker-compose 多容器任务（含 sidecar 服务）不支持。
+
+## Instances 模式的执行环境
+
+命令以 root（uid 0）执行，但**没有任何 Linux capability**（`CapEff` / `CapBnd` 均为 0），并启用 seccomp（实测）。影响和处理：
+
+| 现象 | 原因 | 处理 |
+|---|---|---|
+| 判分脚本 `apt-get install` 报 `setgroups` / `seteuid` / `Permission denied` | apt 需要切换到 `_apt` 用户（CAP_SETUID），并写入 `_apt` 所属目录 | `adapter/` 在**构建时**补装 curl 和 ca-certificates；其他包用 `APT_PACKAGES` 追加 |
+| `tar: Cannot change ownership ... Operation not permitted` | root 无 CAP_CHOWN，无法还原归档属主 | 沙箱内设置 `TAR_OPTIONS=--no-same-owner` |
+
+仍然做不到的：改文件属主为其他用户（`chown user`）、切换用户、挂载、改内核参数。依赖这些操作的任务在 Instances 模式下会失败。microVM 模式没有这些限制（实测）。
+
+## 时间开销（实测）
+
+| 阶段 | microVM | Instances（c7i.xlarge） |
+|---|---|---|
+| 首次创建沙箱到 READY | 约 150 s | 约 10 s |
+| 复用已有沙箱 | 约 1 s | 约 2 s |
+| 首条命令（含实例就绪） | 立即 | 实例空闲时立即；无实例时约 2 min |
+| 安装 Node + Claude Code + AWS SDK | 12-15 s | 约 50 s |
+
+## Agent 与凭证
+
+- Claude Code 在 root 下会拒绝 `bypassPermissions`，设置 `IS_SANDBOX=1` 后可以运行（实测）。不要降权到普通用户：需要修改系统目录的任务会因此失败，看起来像模型能力不足（实测）。
+- 会话内 AWS 相关环境变量全为空，SDK 通过 IMDSv2 取得执行角色凭证（实测）。沙箱内所有进程（包括 agent）共享同一执行角色，所以执行角色只授予：模型调用、拉取镜像、读 `inputs/`、写 `runs/`、停止会话（见 [iam/execution-role-policy.json](../iam/execution-role-policy.json)）。

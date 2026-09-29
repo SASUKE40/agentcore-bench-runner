@@ -1,0 +1,65 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "CheckImageSize",
+      "Effect": "Allow",
+      "Action": "ecr:DescribeImages",
+      "Resource": "*"
+    },
+    {
+      "Sid": "EnsureSandbox",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock-agentcore:ListHarnesses",
+        "bedrock-agentcore:CreateHarness",
+        "bedrock-agentcore:GetHarness",
+        "bedrock-agentcore:ListAgentRuntimes",
+        "bedrock-agentcore:CreateAgentRuntime",
+        "bedrock-agentcore:GetAgentRuntime"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "StartTrial",
+      "Effect": "Allow",
+      "Action": "bedrock-agentcore:InvokeAgentRuntimeCommand",
+      "Resource": "*"
+    },
+    {
+      "Sid": "Cleanup",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock-agentcore:DeleteHarness",
+        "bedrock-agentcore:DeleteAgentRuntime"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "PassExecutionRole",
+      "Effect": "Allow",
+      "Action": "iam:PassRole",
+      "Resource": "arn:aws:iam::<account-id>:role/bench-runner-exec",
+      "Condition": {
+        "StringEquals": {
+          "iam:PassedToService": "bedrock-agentcore.amazonaws.com"
+        }
+      }
+    },
+    {
+      "Sid": "TaskInputsAndResults",
+      "Effect": "Allow",
+      "Action": [
+        "s3:PutObject",
+        "s3:GetObject"
+      ],
+      "Resource": "arn:aws:s3:::<results-bucket>/<prefix>/*"
+    },
+    {
+      "Sid": "FindRun",
+      "Effect": "Allow",
+      "Action": "s3:ListBucket",
+      "Resource": "arn:aws:s3:::<results-bucket>"
+    }
+  ]
+}

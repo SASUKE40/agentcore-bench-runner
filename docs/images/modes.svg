@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 560" width="1120" height="560">
+<style>text { font-family: 'Helvetica Neue', Helvetica, Arial, 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; }</style>
+<defs>
+<marker id="a-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/></marker>
+<marker id="a-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/></marker>
+<marker id="a-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#ea580c"/></marker>
+<marker id="a-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#6b7280"/></marker>
+<marker id="a-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#9333ea"/></marker>
+<filter id="sh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#000" flood-opacity="0.08"/></filter>
+</defs>
+<rect width="1120" height="560" fill="#ffffff"/>
+<rect data-graph-role="container" x="40" y="30" width="500" height="500" rx="12" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+<text x="56" y="54" font-size="13" font-weight="600" fill="#6b7280" text-anchor="start">microVM 模式</text>
+<path d="M290,144 V178" fill="none" stroke="#2563eb" stroke-width="1.8" marker-end="url(#a-blue)"/>
+<path d="M290,244 V278" fill="none" stroke="#2563eb" stroke-width="1.8" marker-end="url(#a-blue)"/>
+<path d="M290,344 V378" fill="none" stroke="#2563eb" stroke-width="1.8" marker-end="url(#a-blue)"/>
+<rect x="100" y="80" width="380" height="64" rx="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#sh)"/>
+<text x="290.0" y="108.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">任务 environment/Dockerfile</text>
+<text x="290.0" y="127.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">内容不改</text>
+<rect x="100" y="180" width="380" height="64" rx="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#sh)"/>
+<text x="290.0" y="208.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">在 arm64 机器上构建</text>
+<text x="290.0" y="227.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">docker build --platform linux/arm64</text>
+<rect x="100" y="280" width="380" height="64" rx="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#sh)"/>
+<text x="290.0" y="308.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">CreateHarness</text>
+<text x="290.0" y="327.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">同镜像复用，harness 保持会话</text>
+<rect x="100" y="380" width="380" height="64" rx="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#sh)"/>
+<text x="290.0" y="408.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">AgentCore 托管 microVM</text>
+<text x="290.0" y="427.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">2 vCPU / 8 GB，约 5 GiB 可写</text>
+<rect x="100" y="474" width="105" height="28" rx="14" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.2"/>
+<text x="152.5" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">就绪约 153 s</text>
+<rect x="217" y="474" width="105" height="28" rx="14" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.2"/>
+<text x="269.5" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">释放约 5 min</text>
+<rect x="334" y="474" width="79" height="28" rx="14" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.2"/>
+<text x="373.5" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">仅 arm64</text>
+<rect data-graph-role="container" x="580" y="30" width="500" height="500" rx="12" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.5"/>
+<text x="596" y="54" font-size="13" font-weight="600" fill="#6b7280" text-anchor="start">Runtime Instances 模式</text>
+<path d="M830,144 V178" fill="none" stroke="#16a34a" stroke-width="1.8" marker-end="url(#a-green)"/>
+<path d="M830,244 V278" fill="none" stroke="#16a34a" stroke-width="1.8" marker-end="url(#a-green)"/>
+<path d="M830,344 V378" fill="none" stroke="#16a34a" stroke-width="1.8" marker-end="url(#a-green)"/>
+<rect x="640" y="80" width="380" height="64" rx="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#sh)"/>
+<text x="830.0" y="108.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">原始任务镜像</text>
+<text x="830.0" y="127.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">task.toml 的 docker_image，不改</text>
+<rect x="640" y="180" width="380" height="64" rx="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#sh)"/>
+<text x="830.0" y="208.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">套通用模板  adapter/</text>
+<text x="830.0" y="227.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">保活入口 + 缺失时补 curl，所有任务相同</text>
+<rect x="640" y="280" width="380" height="64" rx="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#sh)"/>
+<text x="830.0" y="308.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">CreateAgentRuntime</text>
+<text x="830.0" y="327.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">+ capacityProviderConfiguration</text>
+<rect x="640" y="380" width="380" height="64" rx="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#sh)"/>
+<text x="830.0" y="408.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">你账户里的 EC2</text>
+<text x="830.0" y="427.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">实例族自选：CPU / 内存 / GPU / 磁盘</text>
+<rect x="640" y="474" width="98" height="28" rx="14" fill="#ffffff" stroke="#bbf7d0" stroke-width="1.2"/>
+<text x="689.0" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">就绪约 10 s</text>
+<rect x="750" y="474" width="98" height="28" rx="14" fill="#ffffff" stroke="#bbf7d0" stroke-width="1.2"/>
+<text x="799.0" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">释放约 11 s</text>
+<rect x="860" y="474" width="122" height="28" rx="14" fill="#ffffff" stroke="#bbf7d0" stroke-width="1.2"/>
+<text x="921.0" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">x86_64 / arm64</text>
+</svg>

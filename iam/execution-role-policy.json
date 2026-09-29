@@ -1,0 +1,59 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "PullTaskImages",
+      "Effect": "Allow",
+      "Action": [
+        "ecr:GetAuthorizationToken",
+        "ecr:BatchGetImage",
+        "ecr:GetDownloadUrlForLayer",
+        "ecr:BatchCheckLayerAvailability"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "InvokeModel",
+      "Effect": "Allow",
+      "Action": [
+        "bedrock:InvokeModel",
+        "bedrock:InvokeModelWithResponseStream"
+      ],
+      "Resource": [
+        "arn:aws:bedrock:*::foundation-model/anthropic.*",
+        "arn:aws:bedrock:*:*:inference-profile/us.anthropic.*"
+      ]
+    },
+    {
+      "Sid": "ReadTaskInputsAndSplitImages",
+      "Effect": "Allow",
+      "Action": "s3:GetObject",
+      "Resource": [
+        "arn:aws:s3:::<results-bucket>/<prefix>/inputs/*",
+        "arn:aws:s3:::<results-bucket>/<prefix>/images/*"
+      ]
+    },
+    {
+      "Sid": "WriteTrialResults",
+      "Effect": "Allow",
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::<results-bucket>/<prefix>/runs/*"
+    },
+    {
+      "Sid": "ReleaseOwnSession",
+      "Effect": "Allow",
+      "Action": "bedrock-agentcore:StopRuntimeSession",
+      "Resource": "arn:aws:bedrock-agentcore:*:<account-id>:*"
+    },
+    {
+      "Sid": "RuntimeLogs",
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "arn:aws:logs:*:*:log-group:/aws/bedrock-agentcore/*"
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 560" width="1240" height="560">
+<style>text { font-family: 'Helvetica Neue', Helvetica, Arial, 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; }</style>
+<defs>
+<marker id="a-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/></marker>
+<marker id="a-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/></marker>
+<marker id="a-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#ea580c"/></marker>
+<marker id="a-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#6b7280"/></marker>
+<marker id="a-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#9333ea"/></marker>
+<filter id="sh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#000" flood-opacity="0.08"/></filter>
+</defs>
+<rect width="1240" height="560" fill="#ffffff"/>
+<rect x="20" y="102" width="80" height="56" rx="8" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5" filter="url(#sh)"/>
+<text x="60.0" y="135.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">任务</text>
+<path d="M100,130 H122" fill="none" stroke="#6b7280" stroke-width="1.8" marker-end="url(#a-gray)"/>
+<path d="M200,78 V60 H1005 V86" fill="none" stroke="#ea580c" stroke-width="1.8" marker-end="url(#a-orange)"/>
+<rect data-graph-role="label" x="588.5" y="39" width="23" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="600" y="52" font-size="12" font-weight="500" fill="#ea580c" text-anchor="middle">是</text>
+<polygon points="200,78.0 275.0,130 200,182.0 125.0,130" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" filter="url(#sh)"/>
+<text x="200" y="126.5" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">镜像压缩后</text>
+<text x="200" y="143.5" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">&gt; 3 GB?</text>
+<rect x="860" y="88" width="290" height="84" rx="8" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" filter="url(#sh)"/>
+<text x="1005.0" y="126.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">拆分构建 → Instances</text>
+<text x="1005.0" y="145.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">大内容移到 EBS 快照 / S3，运行镜像 ≤ 3 GB</text>
+<path d="M200,182 V248" fill="none" stroke="#6b7280" stroke-width="1.8" marker-end="url(#a-gray)"/>
+<rect data-graph-role="label" x="209" y="207" width="23" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="214" y="220" font-size="12" font-weight="500" fill="#6b7280" text-anchor="start">否</text>
+<path d="M276,300 H302" fill="none" stroke="#6b7280" stroke-width="1.8" marker-end="url(#a-gray)"/>
+<rect data-graph-role="label" x="278.5" y="277" width="23" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="290.0" y="290" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">否</text>
+<path d="M200,354 V468" fill="none" stroke="#16a34a" stroke-width="1.8" marker-end="url(#a-green)"/>
+<rect data-graph-role="label" x="209" y="407" width="23" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="214" y="420" font-size="12" font-weight="500" fill="#16a34a" text-anchor="start">是</text>
+<path d="M456,300 H482" fill="none" stroke="#6b7280" stroke-width="1.8" marker-end="url(#a-gray)"/>
+<rect data-graph-role="label" x="458.5" y="277" width="23" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="470.0" y="290" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">否</text>
+<path d="M380,354 V468" fill="none" stroke="#16a34a" stroke-width="1.8" marker-end="url(#a-green)"/>
+<rect data-graph-role="label" x="389" y="407" width="23" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="394" y="420" font-size="12" font-weight="500" fill="#16a34a" text-anchor="start">是</text>
+<path d="M636,300 H662" fill="none" stroke="#6b7280" stroke-width="1.8" marker-end="url(#a-gray)"/>
+<rect data-graph-role="label" x="638.5" y="277" width="23" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="650.0" y="290" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">否</text>
+<path d="M560,354 V468" fill="none" stroke="#16a34a" stroke-width="1.8" marker-end="url(#a-green)"/>
+<rect data-graph-role="label" x="569" y="407" width="23" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="574" y="420" font-size="12" font-weight="500" fill="#16a34a" text-anchor="start">是</text>
+<path d="M740,354 V468" fill="none" stroke="#16a34a" stroke-width="1.8" marker-end="url(#a-green)"/>
+<rect data-graph-role="label" x="749" y="407" width="23" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="754" y="420" font-size="12" font-weight="500" fill="#16a34a" text-anchor="start">是</text>
+<path d="M816,300 H918" fill="none" stroke="#2563eb" stroke-width="1.8" marker-end="url(#a-blue)"/>
+<rect data-graph-role="label" x="821.5" y="277" width="23" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="833.0" y="290" font-size="12" font-weight="500" fill="#2563eb" text-anchor="middle">否</text>
+<polygon points="200,248.0 275.0,300 200,352.0 125.0,300" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" filter="url(#sh)"/>
+<text x="200" y="305.0" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">需要 GPU?</text>
+<polygon points="380,248.0 455.0,300 380,352.0 305.0,300" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" filter="url(#sh)"/>
+<text x="380" y="296.5" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">CPU &gt; 2 或</text>
+<text x="380" y="313.5" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">内存 &gt; 8 GB?</text>
+<polygon points="560,248.0 635.0,300 560,352.0 485.0,300" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" filter="url(#sh)"/>
+<text x="560" y="296.5" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">可写空间</text>
+<text x="560" y="313.5" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">&gt; 5 GiB?</text>
+<polygon points="740,248.0 815.0,300 740,352.0 665.0,300" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" filter="url(#sh)"/>
+<text x="740" y="296.5" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">只有 x86 镜像</text>
+<text x="740" y="313.5" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">无法重建?</text>
+<rect x="920" y="264" width="150" height="72" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" filter="url(#sh)"/>
+<text x="995.0" y="296.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">microVM</text>
+<text x="995.0" y="315.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">自建 arm64 镜像</text>
+<rect x="125" y="470" width="690" height="66" rx="8" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.5" filter="url(#sh)"/>
+<text x="470.0" y="499.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">Runtime Instances</text>
+<text x="470.0" y="518.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">原始镜像 + 通用模板；实例族、根卷 / EBS 按 cpus、memory_mb、storage_mb 设置</text>
+<text x="1160" y="290" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">判断依据：</text>
+<text x="1160" y="308" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">task.toml 的 cpus /</text>
+<text x="1160" y="326" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">memory_mb / storage_mb</text>
+<text x="1160" y="344" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">/ gpus，以及镜像</text>
+</svg>

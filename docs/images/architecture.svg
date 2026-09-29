@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 690" width="1180" height="690">
+<style>text { font-family: 'Helvetica Neue', Helvetica, Arial, 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; }</style>
+<defs>
+<marker id="a-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/></marker>
+<marker id="a-green" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#16a34a"/></marker>
+<marker id="a-orange" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#ea580c"/></marker>
+<marker id="a-gray" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#6b7280"/></marker>
+<marker id="a-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#9333ea"/></marker>
+<filter id="sh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#000" flood-opacity="0.08"/></filter>
+</defs>
+<rect width="1180" height="690" fill="#ffffff"/>
+<rect data-graph-role="container" x="30" y="140" width="250" height="300" rx="12" fill="#fafafa" stroke="#d1d5db" stroke-width="1.5" stroke-dasharray="6,4"/>
+<text x="46" y="164" font-size="13" font-weight="600" fill="#6b7280" text-anchor="start">客户端（本地 / CI）</text>
+<rect data-graph-role="container" x="340" y="30" width="820" height="610" rx="12" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" stroke-dasharray="6,4"/>
+<text x="356" y="54" font-size="13" font-weight="600" fill="#6b7280" text-anchor="start">你的 AWS 账户</text>
+<rect data-graph-role="container" x="370" y="150" width="470" height="460" rx="12" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" stroke-dasharray="6,4"/>
+<text x="386" y="174" font-size="13" font-weight="600" fill="#6b7280" text-anchor="start">Amazon Bedrock AgentCore</text>
+<rect data-graph-role="container" x="400" y="270" width="410" height="310" rx="12" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.5" stroke-dasharray="6,4"/>
+<text x="416" y="294" font-size="13" font-weight="600" fill="#6b7280" text-anchor="start">沙箱（每个 trial 一个会话）</text>
+<path d="M200,190 V90 H1100 V325 H1042" fill="none" stroke="#16a34a" stroke-width="1.8" marker-end="url(#a-green)"/>
+<rect data-graph-role="label" x="480.5" y="69" width="159" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="560" y="82" font-size="12" font-weight="500" fill="#16a34a" text-anchor="middle">① 上传测试包 → inputs/</text>
+<path d="M255,212 H398" fill="none" stroke="#2563eb" stroke-width="1.8" marker-end="url(#a-blue)"/>
+<rect data-graph-role="label" x="289.0" y="191" width="76" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="327" y="204" font-size="12" font-weight="500" fill="#2563eb" text-anchor="middle">② 确保沙箱</text>
+<path d="M255,248 H305 V348 H418" fill="none" stroke="#2563eb" stroke-width="1.8" marker-end="url(#a-blue)"/>
+<rect data-graph-role="label" x="306" y="292" width="92" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="311" y="305" font-size="12" font-weight="500" fill="#2563eb" text-anchor="start">③ 启动 trial</text>
+<path d="M790,340 H898" fill="none" stroke="#16a34a" stroke-width="1.8" marker-end="url(#a-green)"/>
+<rect data-graph-role="label" x="828.5" y="319" width="31" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="844" y="332" font-size="12" font-weight="500" fill="#16a34a" text-anchor="middle">④ ⑤</text>
+<path d="M700,318 V242" fill="none" stroke="#2563eb" stroke-width="1.8" marker-end="url(#a-blue)"/>
+<rect data-graph-role="label" x="701" y="272" width="76" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="706" y="285" font-size="12" font-weight="500" fill="#2563eb" text-anchor="start">⑥ 释放自身</text>
+<path d="M810,200 H898" fill="none" stroke="#6b7280" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#a-gray)"/>
+<rect data-graph-role="label" x="836.0" y="179" width="36" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="854" y="192" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">拉取</text>
+<path d="M790,475 H888" fill="none" stroke="#9333ea" stroke-width="1.8" marker-end="url(#a-purple)"/>
+<rect data-graph-role="label" x="821.0" y="454" width="36" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="839" y="467" font-size="12" font-weight="500" fill="#9333ea" text-anchor="middle">调用</text>
+<path d="M1042,355 H1125 V70 H160 V188" fill="none" stroke="#16a34a" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#a-green)"/>
+<rect data-graph-role="label" x="462.5" y="49" width="195" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
+<text x="560" y="62" font-size="12" font-weight="500" fill="#16a34a" text-anchor="middle">⑦ 拉取结果 ← runs/&lt;run-id&gt;/</text>
+<rect x="55" y="190" width="200" height="80" rx="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#sh)"/>
+<text x="155.0" y="226.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">bench.py</text>
+<text x="155.0" y="245.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">submit / results</text>
+<rect x="55" y="340" width="200" height="80" rx="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#sh)"/>
+<text x="155.0" y="376.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">tasks/&lt;task&gt;</text>
+<text x="155.0" y="395.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">Harbor 任务</text>
+<rect x="400" y="180" width="410" height="60" rx="8" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5" filter="url(#sh)"/>
+<text x="605.0" y="206.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">控制面</text>
+<text x="605.0" y="225.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">Harness（microVM）/ Agent Runtime（Instances）</text>
+<rect x="420" y="320" width="370" height="56" rx="8" fill="#f0fdfa" stroke="#99f6e4" stroke-width="1.5" filter="url(#sh)"/>
+<text x="605.0" y="344.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">trial.sh</text>
+<text x="605.0" y="363.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">agent → 判分 → 上传结果 → 释放</text>
+<rect x="420" y="440" width="170" height="70" rx="8" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" filter="url(#sh)"/>
+<text x="505.0" y="471.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">tests/test.sh</text>
+<text x="505.0" y="490.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">agent 退出后取回</text>
+<rect x="620" y="440" width="170" height="70" rx="8" fill="#faf5ff" stroke="#e9d5ff" stroke-width="1.5" filter="url(#sh)"/>
+<text x="705.0" y="471.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">Agent</text>
+<text x="705.0" y="490.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">示例：Claude Code</text>
+<text x="605" y="555" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">任务原镜像内执行；凭证来自执行角色（IMDS）</text>
+<path d="M900,309 A70.0,9 0 0 1 1040,309 V371 A70.0,9 0 0 1 900,371 Z" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.5" filter="url(#sh)"/>
+<path d="M900,309 A70.0,9 0 0 0 1040,309" fill="none" stroke="#bbf7d0" stroke-width="1.5"/>
+<text x="970.0" y="341.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">S3</text>
+<text x="970.0" y="359.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">inputs/ · runs/</text>
+<path d="M900,174 A60.0,9 0 0 1 1020,174 V226 A60.0,9 0 0 1 900,226 Z" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5" filter="url(#sh)"/>
+<path d="M900,174 A60.0,9 0 0 0 1020,174" fill="none" stroke="#d1d5db" stroke-width="1.5"/>
+<text x="960.0" y="201.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">ECR</text>
+<text x="960.0" y="219.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">任务镜像</text>
+<rect x="890" y="440" width="190" height="70" rx="8" fill="#faf5ff" stroke="#e9d5ff" stroke-width="1.5" filter="url(#sh)"/>
+<text x="985.0" y="471.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">Amazon Bedrock</text>
+<text x="985.0" y="490.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">模型（示例：Sonnet）</text>
+<line x1="40" y1="666" x2="70" y2="666" stroke="#2563eb" stroke-width="1.8" marker-end="url(#a-blue)"/>
+<text x="78" y="670" font-size="12" font-weight="400" fill="#6b7280" text-anchor="start">AgentCore API</text>
+<line x1="203" y1="666" x2="233" y2="666" stroke="#16a34a" stroke-width="1.8" marker-end="url(#a-green)"/>
+<text x="241" y="670" font-size="12" font-weight="400" fill="#6b7280" text-anchor="start">S3 读写</text>
+<line x1="322" y1="666" x2="352" y2="666" stroke="#6b7280" stroke-width="1.8" stroke-dasharray="6,4" marker-end="url(#a-gray)"/>
+<text x="360" y="670" font-size="12" font-weight="400" fill="#6b7280" text-anchor="start">镜像拉取</text>
+<line x1="446" y1="666" x2="476" y2="666" stroke="#9333ea" stroke-width="1.8" marker-end="url(#a-purple)"/>
+<text x="484" y="670" font-size="12" font-weight="400" fill="#6b7280" text-anchor="start">模型调用</text>
+</svg>
