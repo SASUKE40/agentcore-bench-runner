@@ -1,6 +1,8 @@
 # 选择运行模式
 
-先检查镜像大小，再按顺序判断，第一个命中的条件决定模式（依据任务的 `task.toml` 和镜像）：
+先排除 docker-compose 多容器任务（`environment/docker-compose.yaml` 声明了 `main` 以外的服务），这类任务不支持，见 [limitations.md](limitations.md#docker-compose-多容器任务)。
+
+然后检查镜像大小，再按顺序判断，第一个命中的条件决定模式（依据任务的 `task.toml` 和镜像）：
 
 0. 镜像压缩后超过 3 GB → **拆分构建**，再用 Instances 运行（见 [large-images.md](large-images.md)）。换模式本身绕不开镜像大小上限
 1. 需要 GPU（`[environment].gpus > 0`）→ **Instances**

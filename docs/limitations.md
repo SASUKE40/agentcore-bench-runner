@@ -54,7 +54,18 @@
 
 - 判分在 **agent 所在的同一个沙箱**中进行，对应 Harbor 的默认模式（`environment_mode = "shared"`）。测试在 agent 退出后才从 S3 取回。
 - Harbor 的独立判分模式（`environment_mode = "separate"` 或 `[verifier.environment]`：在另一个断网沙箱中判分，只复制 `artifacts` 声明的产出物）**尚未支持**。Terminal-Bench-Science 的任务全部使用独立判分模式，在本工具上运行时判分环境与官方不同，结果不应作为官方排行榜提交。
-- docker-compose 多容器任务（含 sidecar 服务）不支持。
+- **docker-compose 多容器任务不支持**，运行前应从任务列表中排除，并在结果中注明（例如"70 个任务中运行了 65 个"）。详见下一节。
+
+## docker-compose 多容器任务
+
+`environment/` 下带 `docker-compose.yaml`、声明了除 `main` 以外的服务的任务，本工具不运行。
+
+- **范围**：Terminal-Bench 2.0 的 89 个任务中没有这类任务（有 2 个任务的 `task.toml` 带 `custom_docker_compose = true`，但 compose 配置已迁入 Dockerfile，按单容器正常运行）。Terminal-Bench-Science 的 70 个任务中有 5 个：`inverse-lithography`、`protein-active-learning`、`longitudinal-clinical-agent`、`noisy-blackbox-optimization`、`tamp-skill-planning`。
+- **这类任务的形态**：除 agent 所在的 `main` 容器外，还有一个或多个 sidecar 服务（如模拟器、评估器、实验装置），agent 只能通过 HTTP 调用，不能读取其实现。部分 sidecar 有状态，例如只允许提交一次。
+- **为什么不支持**：一个 AgentCore 会话只运行一个容器，沙箱内也不能再运行容器（Instances 模式没有 Linux capability）。
+  - 把 sidecar 并入 `main` 容器，agent 就能直接读到它的实现和隐藏参数，评测失去意义。
+  - 把 sidecar 放到另一个会话，会话之间没有直接的网络连通，只能经 `InvokeAgentRuntime` 转发。这需要端口适配、名称解析和转发代理，改动了任务的运行环境，风险和维护成本都较高。
+- **如需运行**：在支持 docker compose 的环境中运行这些任务，例如 Harbor 自带的 `docker` 或 `ec2` 环境。
 
 ## Instances 模式的执行环境
 
