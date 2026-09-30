@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 560" width="1240" height="560">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 600" width="1240" height="600">
 <style>text { font-family: 'Helvetica Neue', Helvetica, Arial, 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif; }</style>
 <defs>
 <marker id="a-blue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#2563eb"/></marker>
@@ -8,7 +8,7 @@
 <marker id="a-purple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#9333ea"/></marker>
 <filter id="sh" x="-10%" y="-10%" width="120%" height="130%"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#000" flood-opacity="0.08"/></filter>
 </defs>
-<rect width="1240" height="560" fill="#ffffff"/>
+<rect width="1240" height="600" fill="#ffffff"/>
 <rect x="20" y="102" width="80" height="56" rx="8" fill="#f9fafb" stroke="#d1d5db" stroke-width="1.5" filter="url(#sh)"/>
 <text x="60.0" y="135.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">任务</text>
 <path d="M100,130 H122" fill="none" stroke="#6b7280" stroke-width="1.8" marker-end="url(#a-gray)"/>
@@ -69,4 +69,5 @@
 <text x="1160" y="308" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">task.toml 的 cpus /</text>
 <text x="1160" y="326" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">memory_mb / storage_mb</text>
 <text x="1160" y="344" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">/ gpus，以及镜像</text>
+<text x="20" y="572" font-size="12" font-weight="400" fill="#6b7280" text-anchor="start">注：图中阈值（镜像 3 GB、microVM 2 vCPU / 8 GB 等）为默认配额，可联系 AgentCore service team 申请调整。</text>
 </svg>
