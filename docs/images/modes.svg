@@ -26,12 +26,12 @@
 <rect x="100" y="380" width="380" height="64" rx="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#sh)"/>
 <text x="290.0" y="408.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">AgentCore 托管 microVM</text>
 <text x="290.0" y="427.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">2 vCPU / 8 GB，约 5 GiB 可写</text>
-<rect x="100" y="474" width="115" height="28" rx="14" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.2"/>
-<text x="157.5" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">新会话即时启动</text>
-<rect x="227" y="474" width="178" height="28" rx="14" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.2"/>
-<text x="316.0" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">首建沙箱约 150 s / 镜像</text>
-<rect x="417" y="474" width="79" height="28" rx="14" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.2"/>
-<text x="456.5" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">仅 arm64</text>
+<rect x="100" y="474" width="152" height="28" rx="14" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.2"/>
+<text x="176.0" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">创建约 150 s / 镜像</text>
+<rect x="264" y="474" width="111" height="28" rx="14" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.2"/>
+<text x="319.5" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">冷启动约 12 s</text>
+<rect x="387" y="474" width="79" height="28" rx="14" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.2"/>
+<text x="426.5" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">仅 arm64</text>
 <rect data-graph-role="container" x="580" y="30" width="500" height="500" rx="12" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.5"/>
 <text x="596" y="54" font-size="13" font-weight="600" fill="#6b7280" text-anchor="start">Runtime Instances 模式</text>
 <path d="M830,144 V178" fill="none" stroke="#16a34a" stroke-width="1.8" marker-end="url(#a-green)"/>
@@ -49,10 +49,10 @@
 <rect x="640" y="380" width="380" height="64" rx="8" fill="#ffffff" stroke="#d1d5db" stroke-width="1.5" filter="url(#sh)"/>
 <text x="830.0" y="408.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">你账户里的 EC2</text>
 <text x="830.0" y="427.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">实例族自选：CPU / 内存 / GPU / 磁盘</text>
-<rect x="640" y="474" width="128" height="28" rx="14" fill="#ffffff" stroke="#bbf7d0" stroke-width="1.2"/>
-<text x="704.0" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">有空闲实例时即时</text>
-<rect x="780" y="474" width="131" height="28" rx="14" fill="#ffffff" stroke="#bbf7d0" stroke-width="1.2"/>
-<text x="845.5" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">无实例时约 2 min</text>
-<rect x="923" y="474" width="122" height="28" rx="14" fill="#ffffff" stroke="#bbf7d0" stroke-width="1.2"/>
-<text x="984.0" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">x86_64 / arm64</text>
+<rect x="640" y="474" width="145" height="28" rx="14" fill="#ffffff" stroke="#bbf7d0" stroke-width="1.2"/>
+<text x="712.5" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">创建约 10 s / 镜像</text>
+<rect x="797" y="474" width="111" height="28" rx="14" fill="#ffffff" stroke="#bbf7d0" stroke-width="1.2"/>
+<text x="852.5" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">冷启动约 43 s</text>
+<rect x="920" y="474" width="122" height="28" rx="14" fill="#ffffff" stroke="#bbf7d0" stroke-width="1.2"/>
+<text x="981.0" y="493" font-size="12" font-weight="500" fill="#6b7280" text-anchor="middle">x86_64 / arm64</text>
 </svg>

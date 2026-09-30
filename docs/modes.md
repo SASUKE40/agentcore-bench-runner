@@ -23,7 +23,7 @@
   scripts/build_microvm.sh tasks/<task> <ecr-repo>        # 推送 <ecr-repo>:arm64
   ```
 
-- 沙箱：`CreateHarness`。harness 接管容器启动命令并保持会话，所以镜像不需要任何入口改造。同一镜像的 harness 被复用，首次创建约 150 秒。
+- 沙箱：`CreateHarness`。harness 接管容器启动命令并保持会话，所以镜像不需要任何入口改造。同一镜像的 harness 被复用，创建时间约 150 秒（每个镜像一次）；每个 trial 的冷启动约 12 秒。
 - 注意：少数任务的依赖只有 x86 版本（x86 wheel、qemu 类任务），arm64 构建会失败，这类任务用 Instances 模式。
 
 ## Runtime Instances 模式
@@ -39,7 +39,7 @@
   2. 镜像里缺 curl 时补装 curl 和 ca-certificates。许多任务的 `test.sh` 在判分时 `apt-get install curl`，而运行时没有 Linux capability，apt 无法工作，所以在构建时装好。其他需要预装的包用 `APT_PACKAGES="pkg ..."` 追加。
 
 - 沙箱：`CreateAgentRuntime` + `capacityProviderConfiguration`，运行在你账户的 EC2 上，按 EC2 + EBS 计费。同一镜像的 runtime 被复用。
-- 冷启动：capacity provider 没有空闲实例时，首条命令要等实例就绪，约 2 分钟。
+- 冷启动：每个 trial 的新会话实测约 43 秒（c7i.xlarge），每次都落在一台新启动的 EC2 上；之前的 PoC 中见过约 2 分钟。创建沙箱定义本身约 10 秒，每个镜像一次。
 
 ## 可写空间大的任务
 

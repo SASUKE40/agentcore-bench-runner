@@ -41,9 +41,13 @@
 | 沙箱资源 | `Harness` | `Agent Runtime` + `capacityProviderConfiguration` |
 | 镜像 | 用任务 `environment/Dockerfile` 原样构建 arm64 镜像 | 用任务 `docker_image` 原始镜像，套通用模板 `adapter/` |
 | 规格 | 固定 2 vCPU / 8 GB | 实例族自选（CPU、内存、GPU、磁盘） |
+| 创建时间（沙箱定义，每个镜像一次） | 约 150 s | 约 10 s |
+| 冷启动时间（每个 trial 的新会话） | 约 12 s | 约 43 s（c7i.xlarge，需先起一台 EC2） |
 | 适合 | 轻量任务 | 重任务、x86 专属依赖、官方预构建镜像 |
 
 两种模式的客户端命令、`trial.sh`、结果格式完全相同，只有 `--mode` 和镜像不同。
+
+创建时间只在某个镜像第一次使用时发生一次，之后的 trial 复用沙箱定义；每个 trial 都要付的是冷启动时间。所以按单个 trial 算，microVM 启动更快。两项都是实测，细节见 [limitations](docs/limitations.md#时间开销实测)。
 
 ### 选择模式
 
