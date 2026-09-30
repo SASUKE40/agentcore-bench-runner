@@ -16,11 +16,12 @@
 <rect data-graph-role="label" x="588.5" y="39" width="23" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
 <text x="600" y="52" font-size="12" font-weight="500" fill="#ea580c" text-anchor="middle">是</text>
 <polygon points="200,78.0 275.0,130 200,182.0 125.0,130" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" filter="url(#sh)"/>
-<text x="200" y="126.5" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">镜像压缩后</text>
-<text x="200" y="143.5" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">&gt; 3 GB?</text>
+<text x="200" y="118.0" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">镜像压缩后</text>
+<text x="200" y="135.0" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">&gt; 3 GB?</text>
+<text x="200" y="152.0" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">（默认配额）</text>
 <rect x="860" y="88" width="290" height="84" rx="8" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" filter="url(#sh)"/>
 <text x="1005.0" y="126.0" font-size="14" font-weight="600" fill="#111827" text-anchor="middle">拆分构建 → Instances</text>
-<text x="1005.0" y="145.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">大内容移到 EBS 快照 / S3，运行镜像 ≤ 3 GB</text>
+<text x="1005.0" y="145.0" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">大内容移到 EBS 快照 / S3，运行镜像 ≤ 镜像大小配额</text>
 <path d="M200,182 V248" fill="none" stroke="#6b7280" stroke-width="1.8" marker-end="url(#a-gray)"/>
 <rect data-graph-role="label" x="209" y="207" width="23" height="18" rx="4" fill="#ffffff" opacity="0.95"/>
 <text x="214" y="220" font-size="12" font-weight="500" fill="#6b7280" text-anchor="start">否</text>
@@ -51,8 +52,9 @@
 <polygon points="200,248.0 275.0,300 200,352.0 125.0,300" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" filter="url(#sh)"/>
 <text x="200" y="305.0" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">需要 GPU?</text>
 <polygon points="380,248.0 455.0,300 380,352.0 305.0,300" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" filter="url(#sh)"/>
-<text x="380" y="296.5" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">CPU &gt; 2 或</text>
-<text x="380" y="313.5" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">内存 &gt; 8 GB?</text>
+<text x="380" y="288.0" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">CPU &gt; 2 或</text>
+<text x="380" y="305.0" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">内存 &gt; 8 GB?</text>
+<text x="380" y="322.0" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">（默认配额）</text>
 <polygon points="560,248.0 635.0,300 560,352.0 485.0,300" fill="#fff7ed" stroke="#fed7aa" stroke-width="1.5" filter="url(#sh)"/>
 <text x="560" y="296.5" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">可写空间</text>
 <text x="560" y="313.5" font-size="13" font-weight="600" fill="#111827" text-anchor="middle">&gt; 5 GiB?</text>
@@ -69,5 +71,5 @@
 <text x="1160" y="308" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">task.toml 的 cpus /</text>
 <text x="1160" y="326" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">memory_mb / storage_mb</text>
 <text x="1160" y="344" font-size="12" font-weight="400" fill="#6b7280" text-anchor="middle">/ gpus，以及镜像</text>
-<text x="20" y="572" font-size="12" font-weight="400" fill="#6b7280" text-anchor="start">注：图中阈值（镜像 3 GB、microVM 2 vCPU / 8 GB 等）为默认配额，可联系 AgentCore service team 申请调整。</text>
+<text x="20" y="572" font-size="12" font-weight="400" fill="#6b7280" text-anchor="start">注：镜像 3 GB、microVM 2 vCPU / 8 GB 为默认配额，可联系 AgentCore service team 申请调整；调整后按新配额判断。</text>
 </svg>
