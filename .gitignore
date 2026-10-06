@@ -5,3 +5,7 @@ __pycache__/
 .venv/
 *.log
 out-*/
+# out-runta/ is committed on purpose: one full Runta batch, kept for review.
+# Both lines are needed -- the directory has to be re-included before its contents can be.
+!out-runta/
+!out-runta/**

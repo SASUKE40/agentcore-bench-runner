@@ -91,6 +91,8 @@ runta secret rule set <runtime> --secret <provider-secret-id> \
 - Runtime 冷启动 17–39 s，装 Node + Codex CLI 8–9 s。
 - 三个任务并行，整批 126 s。
 
+仓库里的 [`out-runta/`](../out-runta) 就是这样一整批运行的原始产物（另一次 108 s 的复跑），没有裁剪，可以直接翻 `agent.log`、`verifier.log` 和 `job.log` 核对上面的数字。
+
 两点和 AgentCore 不同、值得记一下：
 
 - **沙箱内是 root 且有完整权限**，任务自带的 `tests/test.sh` 里那种 `apt-get install -y curl` 可以直接跑通；Runtime Instances 模式下容器没有 Linux capabilities，才需要 `runner/install.sh` 里给 apt 打补丁。

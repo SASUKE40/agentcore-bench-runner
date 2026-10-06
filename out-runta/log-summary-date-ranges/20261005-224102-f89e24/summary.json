@@ -1,0 +1,23 @@
+{
+  "run_id": "20261005-224102-f89e24",
+  "task": "log-summary-date-ranges",
+  "mode": "runta",
+  "model": "gpt-5.5",
+  "reward": 1,
+  "reward_json": null,
+  "agent_exit": 0,
+  "verifier_exit": 0,
+  "error": "",
+  "disk_free_mb": {
+    "start": 28042,
+    "end": 27879
+  },
+  "timings_s": {
+    "agent": 24,
+    "verifier": 6,
+    "total": 30
+  },
+  "finished": "2026-10-06T05:42:30Z",
+  "runtime_start_s": 35.9,
+  "image_id": "custom-01a10fab-c648-7a31-834f-eee2bbd54f7b"
+}
