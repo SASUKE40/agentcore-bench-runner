@@ -26,6 +26,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 import uuid
 from urllib.parse import urlparse
@@ -269,38 +270,58 @@ def cmd_build(args):
 def cmd_run(args):
     os.makedirs(args.out, exist_ok=True)
     results = {}
+    # Each trial keeps its own agent.log / verifier.log / trial.log inside the sandbox.
+    # This is the client side of the job -- image reuse, cold start, phases, timings --
+    # which otherwise only ever existed in the terminal. Appended, so a later run adds
+    # to the history rather than replacing it.
+    job_log = os.path.join(args.out, "job.log")
+    write = threading.Lock()
 
-    def one(task_dir):
-        name = os.path.basename(os.path.normpath(task_dir))
+    with open(job_log, "a") as jl:
+        def emit(msg):
+            line = f"{time.strftime('%H:%M:%S')} {msg}"
+            with write:  # threads interleave when --jobs > 1
+                print(line, flush=True)
+                jl.write(line + "\n")
+                jl.flush()
 
-        def log(msg):
-            print(f"[{name}] {msg}", flush=True)
-        try:
-            return run_one(task_dir, args, log)
-        except Exception as exc:  # one task failing must not stop the batch
-            log(f"FAILED: {exc}")
-            return {"task": name, "reward": None, "error": str(exc)}
+        emit(f"job: {len(args.tasks)} task(s), provider={args.provider}, "
+             f"model={args.model or 'provider default'}, jobs={args.jobs}, out={args.out}")
 
-    if args.jobs > 1 and len(args.tasks) > 1:
-        with concurrent.futures.ThreadPoolExecutor(args.jobs) as pool:
-            for task_dir, summary in zip(args.tasks, pool.map(one, args.tasks)):
-                results[task_dir] = summary
-    else:
-        for task_dir in args.tasks:
-            results[task_dir] = one(task_dir)
+        def one(task_dir):
+            name = os.path.basename(os.path.normpath(task_dir))
 
-    with open(os.path.join(args.out, "results.jsonl"), "w") as f:
-        for summary in results.values():
-            f.write(json.dumps(summary) + "\n")
-    print("\ntask                             reward  agent_s  verifier_s  error")
-    for task_dir, s in results.items():
-        t = s.get("timings_s") or {}
-        print(f"{os.path.basename(os.path.normpath(task_dir)):32} "
-              f"{str(s.get('reward')):>6}  {str(t.get('agent')):>7}  {str(t.get('verifier')):>10}  "
-              f"{s.get('error') or ''}")
-    rewards = [s.get("reward") for s in results.values()]
-    scored = [r for r in rewards if isinstance(r, (int, float))]
-    print(f"\nsolved {sum(1 for r in scored if r)}/{len(rewards)}")
+            def log(msg):
+                emit(f"[{name}] {msg}")
+            try:
+                return run_one(task_dir, args, log)
+            except Exception as exc:  # one task failing must not stop the batch
+                log(f"FAILED: {exc}")
+                return {"task": name, "reward": None, "error": str(exc)}
+
+        t0 = time.time()
+        if args.jobs > 1 and len(args.tasks) > 1:
+            with concurrent.futures.ThreadPoolExecutor(args.jobs) as pool:
+                for task_dir, summary in zip(args.tasks, pool.map(one, args.tasks)):
+                    results[task_dir] = summary
+        else:
+            for task_dir in args.tasks:
+                results[task_dir] = one(task_dir)
+
+        with open(os.path.join(args.out, "results.jsonl"), "w") as f:
+            for summary in results.values():
+                f.write(json.dumps(summary) + "\n")
+        emit("")
+        emit("task                             reward  agent_s  verifier_s  error")
+        for task_dir, s in results.items():
+            t = s.get("timings_s") or {}
+            emit(f"{os.path.basename(os.path.normpath(task_dir)):32} "
+                 f"{str(s.get('reward')):>6}  {str(t.get('agent')):>7}  "
+                 f"{str(t.get('verifier')):>10}  {s.get('error') or ''}")
+        rewards = [s.get("reward") for s in results.values()]
+        scored = [r for r in rewards if isinstance(r, (int, float))]
+        emit(f"solved {sum(1 for r in scored if r)}/{len(rewards)} "
+             f"in {time.time() - t0:.0f}s -> {job_log}")
     return 0 if len(scored) == len(rewards) else 1
 
 

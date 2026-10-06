@@ -49,6 +49,15 @@ python runner/runta_bench.py cleanup
 
 结果目录 `out-runta/<task>/<run-id>/` 的内容与 AgentCore 模式的 S3 布局一致：`agent.log`、`verifier.log`、`reward.txt`、`ctrf.json`、`trial.log`、`summary.json`，另外保留了这次 trial 实际使用的 `env` 与三个脚本，便于复现。
 
+`out-runta/` 下另有两个整批级别的文件：
+
+| 文件 | 内容 |
+|---|---|
+| `results.jsonl` | 每个任务一行 `summary.json`（每次 `run` 覆盖写） |
+| `job.log` | 客户端侧的作业日志：镜像复用、冷启动、各阶段、耗时、汇总表，带时间戳（追加写，保留历史） |
+
+沙箱内的 `agent.log` / `verifier.log` / `trial.log` 记的是 trial 自己；`job.log` 记的是客户端做了什么，`--jobs` 并行时多个任务的行会交错，各行都带 `[task]` 前缀。
+
 ## 模型凭证不进沙箱
 
 沙箱里只有一个占位符 `runta-secret-stub`，真正的 key 由 Runta 的出口代理在请求离开沙箱时替换：
