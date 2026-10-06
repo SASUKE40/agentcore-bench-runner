@@ -18,19 +18,17 @@ AgentCore runtime session (runner/trial.sh). The client is not involved.
 import argparse
 import base64
 import hashlib
-import io
 import json
 import os
-import re
 import sys
-import tarfile
 import time
-import tomllib
 import uuid
 
 import boto3
 import botocore.config
 from botocore.exceptions import ClientError
+
+from harbor_task import load_task
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PREFIX = "bench_"  # name prefix of sandboxes created by this tool
@@ -42,33 +40,6 @@ MAX_LIFETIME = 28800  # AgentCore maximum (8 h)
 
 def code_of(exc):
     return exc.response["Error"]["Code"] if isinstance(exc, ClientError) else type(exc).__name__
-
-
-# --------------------------------------------------------------------------- task
-
-def load_task(task_dir):
-    """Read a Harbor task: instruction.md, task.toml, tests/."""
-    cfg = tomllib.load(open(os.path.join(task_dir, "task.toml"), "rb"))
-    instruction = open(os.path.join(task_dir, "instruction.md")).read()
-    workdir = cfg.get("environment", {}).get("workdir")
-    if not workdir:  # fall back to the last WORKDIR of environment/Dockerfile
-        dockerfile = os.path.join(task_dir, "environment", "Dockerfile")
-        if os.path.exists(dockerfile):
-            found = re.findall(r"^\s*WORKDIR\s+(\S+)", open(dockerfile).read(), re.M)
-            workdir = found[-1] if found else None
-    buf = io.BytesIO()
-    with tarfile.open(fileobj=buf, mode="w:gz") as tar:
-        tests = os.path.join(task_dir, "tests")
-        for name in sorted(os.listdir(tests)):
-            tar.add(os.path.join(tests, name), arcname=name)
-    return {
-        "name": os.path.basename(os.path.normpath(task_dir)),
-        "instruction": instruction,
-        "tests_tgz": buf.getvalue(),
-        "workdir": workdir or "/",
-        "agent_timeout": int(cfg.get("agent", {}).get("timeout_sec", 3600)),
-        "verifier_timeout": int(cfg.get("verifier", {}).get("timeout_sec", 900)),
-    }
 
 
 # --------------------------------------------------------------------------- sandbox

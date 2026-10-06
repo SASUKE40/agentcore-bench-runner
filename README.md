@@ -122,6 +122,17 @@ python runner/bench.py results <run-id> --wait 1800
 python runner/bench.py cleanup
 ```
 
+## 换沙箱：Runta
+
+同一套任务也可以跑在 [Runta](https://runta.com) 的云沙箱上，不需要 AWS 凭证、Docker 或 `config.json`，只要本机 `runta` CLI 登录过：
+
+```bash
+python runner/runta_bench.py build tasks/fix-git     # 每个任务一次
+python runner/runta_bench.py run tasks/* --jobs 3    # 构建、判分、拉结果、删沙箱
+```
+
+任务格式、agent 脚本约定、`summary.json` 字段都不变。模型凭证不进沙箱，由 Runta 出口代理注入。细节与实测见 [docs/runta.md](docs/runta.md)。
+
 批量评测就是对多个任务依次 `submit`，每个 trial 在各自的会话里并行运行。
 
 Instances 模式需要预先创建 capacity provider（实例族、子网、安全组、根卷大小），参见 [Runtime Instances 文档](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-instances.html)。
@@ -156,6 +167,7 @@ s3://<bucket>/<prefix>/runs/<task>/<run-id>/
 | 文档 | 内容 |
 |---|---|
 | [docs/modes.md](docs/modes.md) | 怎么选 microVM 还是 Instances |
+| [docs/runta.md](docs/runta.md) | 在 Runta 沙箱上运行同一套任务 |
 | [docs/limitations.md](docs/limitations.md) | 限制与配额（实测 / 文档分别标注） |
 | [docs/large-images.md](docs/large-images.md) | 超过镜像上限时的拆分构建方案 |
 | [docs/test-plan.md](docs/test-plan.md) | 测试矩阵与结果汇总 |
@@ -173,6 +185,9 @@ s3://<bucket>/<prefix>/runs/<task>/<run-id>/
 | `runner/agent.sh` | 沙箱内运行一次 agent（示例：Claude Code） |
 | `runner/aws.mjs` | 沙箱内 S3 读写与停止会话（凭证来自执行角色） |
 | `runner/batch.py` | 批量运行：一次提交多个任务，限制同时在跑的数量，从 S3 汇总结果 |
+| `runner/harbor_task.py` | 读取 Harbor 任务目录，两个客户端共用 |
+| `runner/runta_bench.py` | Runta 客户端：`build` / `run` / `cleanup` |
+| `runner/runta/` | Runta 沙箱内的 `trial.sh` / `install.sh` / `agent.sh`（示例：Codex CLI） |
 | `adapter/` | 两种模式共用的镜像模板（microVM 只用其 `tools` 阶段） |
 | `scripts/` | 镜像构建脚本：单个任务、批量（`build_all.sh`）、大镜像拆分构建 |
 | `tasks/` | 示例任务，原样取自 [Terminal-Bench 2.0](https://github.com/laude-institute/terminal-bench-2)（Apache-2.0，见 `tasks/LICENSE`）：`fix-git` / `log-summary-date-ranges` / `openssl-selfsigned-cert` |
